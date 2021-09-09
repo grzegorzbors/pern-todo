@@ -11,7 +11,7 @@ const TodoInput = () => {
     e.preventDefault();
     try {
       const body = { description };
-      const response = await fetch(process.env.REACT_APP_ENDPOINT, {
+      await fetch(process.env.REACT_APP_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -20,6 +20,7 @@ const TodoInput = () => {
       console.log(error.message);
     }
   };
+
   return (
     <>
       <h1 className="text-center mt-5">PERN Todo List</h1>

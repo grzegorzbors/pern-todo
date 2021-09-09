@@ -1,17 +1,8 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import TodoContext from "../context/TodoContext";
 
 const TotoList = () => {
-  const [todoItems, setTodoItems] = useState([]);
-
-  const getTodoData = async () => {
-    try {
-      const response = await fetch(process.env.REACT_APP_ENDPOINT);
-      const jsonData = await response.json();
-      setTodoItems(jsonData);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const { todoItems, setTodoItems } = useContext(TodoContext);
 
   const handleDelete = async (id) => {
     try {
@@ -24,11 +15,6 @@ const TotoList = () => {
       console.log(error.message);
     }
   };
-
-  useEffect(() => {
-    console.log("effect");
-    getTodoData();
-  }, []);
 
   return (
     <table className="table mt-5 text-center">

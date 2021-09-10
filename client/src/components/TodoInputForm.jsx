@@ -1,13 +1,9 @@
-import { useState } from "react";
-
-const TodoInput = () => {
-  const [description, setDescription] = useState("");
-
+const TodoInput = ({ setDescription, description, getTodoData }) => {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
 
-  const onSubmitForm = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const body = { description };
@@ -16,6 +12,8 @@ const TodoInput = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      getTodoData();
+      setDescription("");
     } catch (error) {
       console.log(error.message);
     }
@@ -23,12 +21,11 @@ const TodoInput = () => {
 
   return (
     <>
-      <h1 className="text-center mt-5">PERN Todo List</h1>
-      <form className="d-flex" onSubmit={onSubmitForm}>
+      <form className="d-flex" onSubmit={handleSubmit}>
         <input
           type="text"
           className="form-control"
-          defaultValue={description}
+          value={description}
           onChange={handleDescriptionChange}
         />
         <button type="submit" className="btn btn-success">

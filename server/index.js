@@ -37,7 +37,6 @@ app.get("/todos", async (req, res) => {
 });
 
 //get a todo
-
 app.get("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -50,15 +49,15 @@ app.get("/todos/:id", async (req, res) => {
   }
 });
 
-//update todo
+//update todo completed
 app.put("/todos/:id", async (req, res) => {
   try {
+    console.log(req.body);
     const { id } = req.params;
-    const { description } = req.body;
-    console.log(description);
+    const { completed } = req.body;
     const updateTodo = await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
-      [description, id]
+      "UPDATE todo SET completed = $1 WHERE todo_id = $2",
+      [completed, id]
     );
     res.json("Todo updated!");
   } catch (error) {

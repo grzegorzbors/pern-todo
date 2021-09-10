@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import TodoInput from "./components/TodoInput.jsx";
+import TodoInputForm from "./components/TodoInputForm.jsx";
 import TotoList from "./components/TotoList";
-import TodoContext from "./context/TodoContext";
 
 // env
 require("dotenv").config();
 
 const App = () => {
+  const [description, setDescription] = useState("");
   const [todoItems, setTodoItems] = useState([]);
 
   const getTodoData = async () => {
@@ -21,20 +21,25 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("app effect");
     getTodoData();
   }, []);
 
   return (
-    <TodoContext.Provider value={{ todoItems, setTodoItems }}>
-      <div className="App">
-        <div className="container">
-          <h1>ToDo List</h1>
-          <TodoInput />
-          <TotoList />
-        </div>
+    <div className="App">
+      <div className="container">
+        <h1 className="text-center mt-5">PERN Todo List</h1>
+        <TodoInputForm
+          setDescription={setDescription}
+          description={description}
+          getTodoData={getTodoData}
+        />
+        <TotoList
+          todoItems={todoItems}
+          setTodoItems={setTodoItems}
+          getTodoData={getTodoData}
+        />
       </div>
-    </TodoContext.Provider>
+    </div>
   );
 };
 

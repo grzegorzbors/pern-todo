@@ -5,7 +5,7 @@ import TodoInputForm from "./TodoInputForm";
 const TodoList = () => {
   const [description, setDescription] = useState("");
   const [todoItems, setTodoItems] = useState([]);
-  const [updateList, setUpdateList] = useState(false);
+  const [updateToggle, setUpdateToggle] = useState(false);
 
   const getTodoData = async () => {
     try {
@@ -33,7 +33,6 @@ const TodoList = () => {
   };
 
   const handleSubmit = async (e) => {
-    setUpdateList(false);
     e.preventDefault();
     if (description.length === 0) return;
     try {
@@ -44,14 +43,13 @@ const TodoList = () => {
         body: JSON.stringify(body),
       });
       setDescription("");
-      setUpdateList(true);
+      setUpdateToggle((toggle) => !toggle);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const handleComplete = async (id, completedStatus) => {
-    setUpdateList(false);
     try {
       let completed = !completedStatus;
       const body = { completed };
@@ -60,7 +58,7 @@ const TodoList = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      setUpdateList(true);
+      setUpdateToggle((toggle) => !toggle);
     } catch (error) {
       console.log(error.message);
     }
@@ -69,11 +67,12 @@ const TodoList = () => {
   useEffect(() => {
     console.log("App Effect");
     getTodoData();
-  }, [updateList]);
+  }, [updateToggle]);
 
   return (
     <>
       <TodoInputForm
+        description={description}
         setDescription={setDescription}
         handleSubmit={handleSubmit}
       />

@@ -1,21 +1,6 @@
-const TodoInput = ({ setDescription, description }) => {
+const TodoInputForm = ({ setDescription, description, handleSubmit }) => {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const body = { description };
-      await fetch(process.env.REACT_APP_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      setDescription("");
-    } catch (error) {
-      console.log(error.message);
-    }
   };
 
   return (
@@ -35,4 +20,4 @@ const TodoInput = ({ setDescription, description }) => {
   );
 };
 
-export default TodoInput;
+export default TodoInputForm;

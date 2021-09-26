@@ -1,13 +1,11 @@
-import { useState } from "react";
 import todoItemStyles from "./TodoItem.module.css";
 
 const ToDoItem = ({ id, description, completedStatus, handleDelete }) => {
-  const [completed, setCompleted] = useState(completedStatus);
-
   const handleComplete = async (id) => {
     try {
-      setCompleted((completed) => !completed);
+      let completed = !completedStatus;
       const body = { completed };
+      console.log(body);
       await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -19,7 +17,7 @@ const ToDoItem = ({ id, description, completedStatus, handleDelete }) => {
   };
 
   const completedClass =
-    completed === true ? todoItemStyles.todo__strikethrough : "";
+    completedStatus === true ? todoItemStyles.todo__strikethrough : "";
 
   return (
     <div className="d-flex justify-content-center p-1">

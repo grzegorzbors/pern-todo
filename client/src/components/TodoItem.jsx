@@ -7,7 +7,6 @@ const ToDoItem = ({
   handleComplete,
   handleDelete,
 }) => {
-  console.log("Item", id);
   const completedClass =
     completedStatus === true ? todoItemStyles.todo__strikethrough : "";
 

@@ -1,5 +1,5 @@
 import "./App.css";
-import TotoList from "./components/ToDoList";
+import TodoList from "./components/TodoList";
 
 // env
 require("dotenv").config();
@@ -9,7 +9,7 @@ const App = () => {
     <div className="App">
       <div className="container">
         <h1 className="text-center mt-5">PERN Todo List</h1>
-        <TotoList />
+        <TodoList />
       </div>
     </div>
   );

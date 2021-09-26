@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import ToDoItem from "./TodoItem";
 import TodoInputForm from "./TodoInputForm";
 
-const TotoList = () => {
+const TodoList = () => {
   const [description, setDescription] = useState("");
   const [todoItems, setTodoItems] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   const getTodoData = async () => {
-    console.log("GED");
     try {
       const response = await fetch(process.env.REACT_APP_ENDPOINT);
       const todos = await response.json();
@@ -22,12 +22,18 @@ const TotoList = () => {
       await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
         method: "DELETE",
       });
+      setTodoItems(
+        todoItems.filter(({ todo_id }) => {
+          return todo_id !== id;
+        })
+      );
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const handleSubmit = async (e) => {
+    setUpdateList(false);
     e.preventDefault();
     if (description.length === 0) return;
     try {
@@ -38,12 +44,14 @@ const TotoList = () => {
         body: JSON.stringify(body),
       });
       setDescription("");
+      setUpdateList(true);
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const handleComplete = async (id, completedStatus) => {
+    setUpdateList(false);
     try {
       let completed = !completedStatus;
       const body = { completed };
@@ -52,6 +60,7 @@ const TotoList = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      setUpdateList(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -60,7 +69,7 @@ const TotoList = () => {
   useEffect(() => {
     console.log("App Effect");
     getTodoData();
-  }, []);
+  }, [updateList]);
 
   return (
     <>
@@ -84,4 +93,4 @@ const TotoList = () => {
   );
 };
 
-export default TotoList;
+export default TodoList;

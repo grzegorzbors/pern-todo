@@ -1,4 +1,4 @@
-const TodoInput = ({ setDescription, description, getTodoData }) => {
+const TodoInput = ({ setDescription, description }) => {
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
   };
@@ -12,7 +12,6 @@ const TodoInput = ({ setDescription, description, getTodoData }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      getTodoData();
       setDescription("");
     } catch (error) {
       console.log(error.message);

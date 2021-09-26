@@ -1,29 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import todoItemStyles from "./TodoItem.module.css";
 
-const ToDoItem = ({ id, description, completedStatus, getTodoData }) => {
+const ToDoItem = ({ id, description, completedStatus, handleDelete }) => {
   const [completed, setCompleted] = useState(completedStatus);
 
-  const handleDelete = async (id) => {
+  const handleComplete = async (id) => {
     try {
-      await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
-        method: "DELETE",
-      });
-      getTodoData();
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleComplete = (id) => {
-    setCompleted(() => !completed);
-    updateData(id);
-  };
-
-  const updateData = async (id) => {
-    console.log(completed);
-    const body = { completed };
-    try {
+      setCompleted((completed) => !completed);
+      const body = { completed };
       await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

@@ -1,6 +1,6 @@
 import ToDoItem from "./TodoItem";
 
-const TotoList = ({ todoItems, getTodoData }) => {
+const TotoList = ({ todoItems, handleDelete }) => {
   return (
     <ul className="list-group mt-2">
       {todoItems.map(({ todo_id, description, completed }) => (
@@ -9,7 +9,7 @@ const TotoList = ({ todoItems, getTodoData }) => {
           id={todo_id}
           description={description}
           completedStatus={completed}
-          getTodoData={getTodoData}
+          handleDelete={handleDelete}
         />
       ))}
     </ul>

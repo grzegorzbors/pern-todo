@@ -20,9 +20,19 @@ const App = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     getTodoData();
-  }, []);
+  }, [todoItems]);
 
   return (
     <div className="App">
@@ -31,12 +41,11 @@ const App = () => {
         <TodoInputForm
           setDescription={setDescription}
           description={description}
-          getTodoData={getTodoData}
         />
         <TotoList
           todoItems={todoItems}
           setTodoItems={setTodoItems}
-          getTodoData={getTodoData}
+          handleDelete={handleDelete}
         />
       </div>
     </div>

@@ -7,6 +7,7 @@ const TotoList = () => {
   const [todoItems, setTodoItems] = useState([]);
 
   const getTodoData = async () => {
+    console.log("GED");
     try {
       const response = await fetch(process.env.REACT_APP_ENDPOINT);
       const todos = await response.json();
@@ -42,6 +43,20 @@ const TotoList = () => {
     }
   };
 
+  const handleComplete = async (id, completedStatus) => {
+    try {
+      let completed = !completedStatus;
+      const body = { completed };
+      await fetch(`${process.env.REACT_APP_ENDPOINT}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     console.log("App Effect");
     getTodoData();
@@ -61,6 +76,7 @@ const TotoList = () => {
             description={description}
             completedStatus={completed}
             handleDelete={handleDelete}
+            handleComplete={handleComplete}
           />
         ))}
       </ul>

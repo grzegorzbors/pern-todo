@@ -1,8 +1,9 @@
-require("dotenv").config();
-const express = require("express");
+import "dotenv/config";
+import express, { Request, Response } from "express";
+import cors from "cors";
+import pool from "./db";
+
 const app = express();
-const cors = require("cors");
-const pool = require("./db");
 
 //middleware
 app.use(cors());
@@ -12,7 +13,7 @@ app.use(express.json()); //req.body
 
 //create a todo
 
-app.post("/todos", async (req, res) => {
+app.post("/todos", async (req: Request, res: Response) => {
   try {
     const { description } = req.body;
     const newTodo = await pool.query(
@@ -21,40 +22,39 @@ app.post("/todos", async (req, res) => {
     );
 
     res.json(newTodo.rows[0]);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 });
 
 //get all todos
-app.get("/todos", async (req, res) => {
+app.get("/todos", async (req: Request, res: Response) => {
   try {
     const allTodos = await pool.query(
       "SELECT * FROM todo ORDER BY todo_id DESC"
     );
     res.json(allTodos.rows);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 });
 
 //get a todo
-app.get("/todos/:id", async (req, res) => {
+app.get("/todos/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [
       id,
     ]);
     res.json(todo.rows[0]);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 });
 
 //update todo completed
-app.put("/todos/:id", async (req, res) => {
+app.put("/todos/:id", async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     const { id } = req.params;
     const { completed } = req.body;
     const updateTodo = await pool.query(
@@ -62,20 +62,20 @@ app.put("/todos/:id", async (req, res) => {
       [completed, id]
     );
     res.json("Todo updated!");
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 });
 
 //delete todo
-app.delete("/todos/:id", async (req, res) => {
+app.delete("/todos/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const deleteTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1", [
       id,
     ]);
     res.json(`Item ${id} deleted!`);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error.message);
   }
 });

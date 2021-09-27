@@ -1,4 +1,4 @@
-const Pool = require("pg").Pool;
+import { Pool } from "pg";
 
 const pool = new Pool({
   user: process.env.DB_USER,
@@ -7,4 +7,4 @@ const pool = new Pool({
   database: process.env.DB_DATABASE,
 });
 
-module.exports = pool;
+export = pool;

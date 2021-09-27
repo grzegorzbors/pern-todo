@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import ToDoItem from "./TodoItem";
+import TodoItem from "./TodoItem";
 import TodoInputForm from "./TodoInputForm";
 
 const TodoList = () => {
   const [description, setDescription] = useState("");
   const [todoItems, setTodoItems] = useState([]);
-  const [updateToggle, setUpdateToggle] = useState(false);
 
   const getTodoData = async () => {
     try {
@@ -43,7 +42,7 @@ const TodoList = () => {
         body: JSON.stringify(body),
       });
       setDescription("");
-      setUpdateToggle((toggle) => !toggle);
+      getTodoData();
     } catch (error) {
       console.log(error.message);
     }
@@ -58,16 +57,15 @@ const TodoList = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      setUpdateToggle((toggle) => !toggle);
+      getTodoData();
     } catch (error) {
       console.log(error.message);
     }
   };
 
   useEffect(() => {
-    console.log("App Effect");
     getTodoData();
-  }, [updateToggle]);
+  }, []);
 
   return (
     <>
@@ -78,7 +76,7 @@ const TodoList = () => {
       />
       <ul className="list-group mt-2">
         {todoItems.map(({ todo_id, description, completed }) => (
-          <ToDoItem
+          <TodoItem
             key={todo_id}
             id={todo_id}
             description={description}

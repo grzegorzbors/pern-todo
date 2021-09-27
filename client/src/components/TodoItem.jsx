@@ -1,6 +1,6 @@
 import todoItemStyles from "./TodoItem.module.css";
 
-const ToDoItem = ({
+const TodoItem = ({
   id,
   description,
   completedStatus,
@@ -28,4 +28,4 @@ const ToDoItem = ({
   );
 };
 
-export default ToDoItem;
+export default TodoItem;

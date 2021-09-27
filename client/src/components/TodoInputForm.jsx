@@ -10,6 +10,7 @@ const TodoInputForm = ({ setDescription, description, handleSubmit }) => {
           type="text"
           className="form-control"
           value={description}
+          placeholder="Type in your task..."
           onChange={handleDescriptionChange}
         />
         <button type="submit" className="btn btn-success">

@@ -2,6 +2,7 @@ import "dotenv/config";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import pool from "./db";
+require("dotenv").config({ path: "../.env" });
 
 const app = express();
 
@@ -57,7 +58,7 @@ app.put("/todos/:id", async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { completed } = req.body;
-    const updateTodo = await pool.query(
+    const updatedTodo = await pool.query(
       "UPDATE todo SET completed = $1 WHERE todo_id = $2",
       [completed, id]
     );

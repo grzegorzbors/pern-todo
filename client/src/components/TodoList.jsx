@@ -36,13 +36,14 @@ const TodoList = () => {
     if (description.length === 0) return;
     try {
       const body = { description };
-      await fetch(process.env.REACT_APP_ENDPOINT, {
+      const response = await fetch(process.env.REACT_APP_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+      const data = await response.json();
       setDescription("");
-      getTodoData();
+      setTodoItems((items) => [data, ...items]);
     } catch (error) {
       console.log(error.message);
     }
